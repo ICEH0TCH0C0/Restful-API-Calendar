@@ -3,25 +3,31 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.Calendar.mapper.PlanMapper">
-<!--추가-->
+
+    <resultMap id="planResult" type="com.kh.Calendar.entity.Plan">
+        <id column="PLAN_NO" property="planNo"/>
+        <result column="PLAN_TITLE" property="planTitle"/>
+        <result column="PLAN_CONTENT" property="planContent"/>
+        <result column="DATE" property="date"/>
+    </resultMap>
+
     <insert id="addPlan" parameterType="com.kh.Calendar.entity.Plan" useGeneratedKeys="true" keyProperty="planNo">
         INSERT INTO PLAN (USER_NO, PLAN_TITLE, DATE, PLAN_CONTENT)
         VALUES (#{user.userNo}, #{planTitle}, #{date}, #{planContent})
     </insert>
-<!--수정-->
+
     <update id="updatePlan" parameterType="com.kh.Calendar.entity.Plan">
         UPDATE PLAN
         SET PLAN_TITLE = #{planTitle},
             PLAN_CONTENT = #{planContent}
         WHERE PLAN_NO = #{planNo}
     </update>
-<!--삭제-->
+
     <delete id="deletePlan">
         DELETE FROM PLAN WHERE PLAN_NO = #{planNo}
     </delete>
 
-<!--검색-->
-    <select id="searchPlans" resultType="com.kh.Calendar.entity.Plan">
+    <select id="searchPlans" resultMap="planResult">
         SELECT *
         FROM PLAN
         WHERE USER_NO = #{userNo}
