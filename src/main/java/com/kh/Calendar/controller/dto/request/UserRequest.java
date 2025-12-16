@@ -44,4 +44,29 @@ public class UserRequest {
                     .build();
         }
     }
+
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class UpdateUserDto {
+        private Long userNo;      // 누구인지 식별 (필수)
+        private String userName;  // 수정할 이름
+        private String userPhone; // 수정할 번호
+        private String userEmail; // 수정할 이메일
+
+
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class FindUserDto {
+        private String userId;
+        private String userName;
+        private String userPhone;
+    }
 }

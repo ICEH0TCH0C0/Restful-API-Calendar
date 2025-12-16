@@ -3,6 +3,9 @@ package com.kh.Calendar.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @AllArgsConstructor
@@ -30,5 +33,9 @@ public class User {
 
     @Column(name = "USER_EMAIL", nullable = false, length = 50)
     private String userEmail;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Plan> plans = new ArrayList<>();
 
 }
