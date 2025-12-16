@@ -1,4 +1,4 @@
-package com.kh.Calendar.controller.dto;
+package com.kh.Calendar.controller.dto.response;
 
 import com.kh.Calendar.entity.User;
 import lombok.Builder;
@@ -14,13 +14,11 @@ public class UserResponse {
     public static class LoginUserDto{
         private Long userNo;
         private String userId;
-        private String userPwd;
 
-        public LoginUserDto of(User user){
+        public static LoginUserDto of(User user){
             return LoginUserDto.builder()
                     .userNo(user.getUserNo())
                     .userId(user.getUserId())
-                    .userPwd(user.getUserPwd())
                     .build();
         }
 

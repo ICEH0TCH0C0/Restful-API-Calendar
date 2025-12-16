@@ -1,6 +1,6 @@
 package com.kh.Calendar.controller;
 
-import com.kh.Calendar.controller.dto.UserResponse;
+import com.kh.Calendar.controller.dto.response.UserResponse;
 import com.kh.Calendar.controller.dto.request.UserRequest;
 import com.kh.Calendar.entity.User;
 import com.kh.Calendar.service.UserService;
@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -33,11 +31,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
+    @ResponseBody
     public  ResponseEntity<?> findByIdPwd(@RequestBody UserRequest.LoginUserDto request) {
         User user = request.toEntity();
         User result = userService.findByIdPwd(user);
         if(result != null) {
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            UserResponse.LoginUserDto responseDto = UserResponse.LoginUserDto.of(result);
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
         }
         else {
             return new ResponseEntity<>("login failed", HttpStatus.NOT_FOUND);
