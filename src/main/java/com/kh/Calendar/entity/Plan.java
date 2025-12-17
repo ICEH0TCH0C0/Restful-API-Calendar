@@ -2,7 +2,6 @@ package com.kh.Calendar.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Getter
@@ -24,11 +23,15 @@ public class Plan {
     @Column(name = "PLAN_TITLE", nullable = false, length = 30)
     private String planTitle;
 
-    @CreatedDate
     @Column(name = "DATE", nullable = false)
     private String date;
 
     @Column(name = "PLAN_CONTENT", nullable = false, length = 100)
     private String planContent;
 
+    // 정보 수정을 위한 메소드
+    public void update(String planTitle, String planContent) {
+        this.planTitle = planTitle;
+        this.planContent = planContent;
+    }
 }

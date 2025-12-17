@@ -38,4 +38,10 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Plan> plans = new ArrayList<>();
 
+    // 정보 수정을 위한 메소드
+    public void update(String userName, String userPhone, String userEmail) {
+        this.userName = userName;
+        this.userPhone = userPhone;
+        this.userEmail = userEmail;
+    }
 }

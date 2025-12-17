@@ -1,54 +1,61 @@
 package com.kh.Calendar.service;
 
-import com.kh.Calendar.controller.dto.request.PlanRequest;
-import com.kh.Calendar.controller.dto.response.PlanResponse;
+import com.kh.Calendar.dto.PlanRequestDto;
+import com.kh.Calendar.dto.PlanResponseDto;
 import com.kh.Calendar.entity.Plan;
 import com.kh.Calendar.entity.User;
-import com.kh.Calendar.mapper.PlanMapper;
-import com.kh.Calendar.mapper.UserMapper;
+import com.kh.Calendar.repository.PlanRepository;
+import com.kh.Calendar.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PlanServiceImpl implements PlanService {
 
-    private final PlanMapper planMapper;
-    private final UserMapper userMapper; // userNo로 User 객체 찾기 위해 필요
+    private final PlanRepository planRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public Long addPlan(PlanRequest.AddPlanDto request) {
-        User user = userMapper.findByUserNo(request.getUserNo());
-        if (user == null) return null;
-
-        Plan plan = request.toEntity(user);
-        planMapper.addPlan(plan); // 실행 시 plan 객체 안에 planNo가 담김 (useGeneratedKeys 덕분)
-
-        return plan.getPlanNo(); // 진짜 ID 반환!
+    @Transactional
+    public PlanResponseDto createPlan(Long userNo, PlanRequestDto requestDto) {
+        User user = userRepository.findByUserNo(userNo)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
+        
+        Plan plan = requestDto.toEntity(user);
+        Plan savedPlan = planRepository.save(plan);
+        return PlanResponseDto.from(savedPlan);
     }
 
     @Override
-    public int updatePlan(PlanRequest.UpdatePlanDto request) {
-        Plan plan = Plan.builder()
-                .planNo(request.getPlanNo())
-                .planTitle(request.getPlanTitle())
-                .planContent(request.getPlanContent())
-                .build();
-        return planMapper.updatePlan(plan);
+    @Transactional
+    public PlanResponseDto updatePlan(Long planNo, PlanRequestDto requestDto) {
+        Plan plan = planRepository.findByPlanNo(planNo)
+                .orElseThrow(() -> new IllegalArgumentException("해당 일정을 찾을 수 없습니다."));
+
+        plan.update(requestDto.getPlanTitle(), requestDto.getPlanContent());
+
+        return PlanResponseDto.from(plan);
     }
 
     @Override
-    public int deletePlan(Long planNo) {
-        return planMapper.deletePlan(planNo);
+    @Transactional
+    public void deletePlan(Long planNo) {
+        Plan plan = planRepository.findByPlanNo(planNo)
+                .orElseThrow(() -> new IllegalArgumentException("해당 일정을 찾을 수 없습니다."));
+        planRepository.delete(plan);
     }
 
     @Override
-    public List<PlanResponse.PlanDto> searchPlans(Long userNo, String date, String keyword) {
-        List<Plan> plans = planMapper.searchPlans(userNo, date, keyword);
-        // Entity 리스트 -> DTO 리스트 변환해서 반환
-        return plans.stream().map(PlanResponse.PlanDto::of).collect(Collectors.toList());
+    public List<PlanResponseDto> searchPlans(Long userNo, String date, String keyword) {
+        List<Plan> plans = planRepository.searchPlans(userNo, date, keyword);
+        return plans.stream()
+                .map(PlanResponseDto::from)
+                .collect(Collectors.toList());
     }
 }
