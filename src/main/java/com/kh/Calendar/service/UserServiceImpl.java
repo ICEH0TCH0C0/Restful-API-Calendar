@@ -54,4 +54,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.findUserPwd(requestDto.getUserId(), requestDto.getUserName(), requestDto.getUserPhone())
                 .orElseThrow(() -> new IllegalArgumentException("해당 정보와 일치하는 비밀번호를 찾을 수 없습니다."));
     }
+
+    @Override
+    @Transactional
+    public void deleteUser(Long userNo) {
+        User user = userRepository.findByUserNo(userNo)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
+        userRepository.delete(user);
+    }
 }

@@ -23,7 +23,7 @@ public interface UserRepository {
     
     // 비밀번호 찾기
     Optional<String> findUserPwd(String userId, String userName, String userPhone);
-    
-    // 전체 회원 조회 (필요시)
-    List<User> findAll();
+
+    // 회원 탈퇴
+    void delete(User user);
 }

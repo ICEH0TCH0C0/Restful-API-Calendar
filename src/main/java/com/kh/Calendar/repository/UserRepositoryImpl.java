@@ -5,7 +5,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -55,9 +54,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<User> findAll() {
-        // findAll의 경우에도 N+1 문제가 발생할 수 있으므로 fetch join 추가
-        return em.createQuery("select u from User u left join fetch u.plans", User.class)
-                .getResultList();
+    public void delete(User user) {
+        em.remove(user);
     }
 }

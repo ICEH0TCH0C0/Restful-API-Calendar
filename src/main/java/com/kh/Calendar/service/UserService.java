@@ -19,4 +19,7 @@ public interface UserService {
 
     // 비밀번호 찾기
     String findUserPwd(UserRequestDto requestDto);
+
+    // 회원 탈퇴
+    void deleteUser(Long userNo);
 }

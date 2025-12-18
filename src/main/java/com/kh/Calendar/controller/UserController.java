@@ -55,4 +55,11 @@ public class UserController {
         response.put("userPwd", foundPwd);
         return ResponseEntity.ok(response);
     }
+
+    // 회원 탈퇴
+    @DeleteMapping("/{userNo}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userNo) {
+        userService.deleteUser(userNo);
+        return ResponseEntity.ok().build();
+    }
 }
