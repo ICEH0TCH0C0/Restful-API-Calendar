@@ -15,6 +15,8 @@ public class PlanResponseDto {
     private String planTitle;
     private String date;
     private String planContent;
+    private Long categoryNo;
+    private String categoryName;
 
     // Entity -> DTO 변환 메소드
     public static PlanResponseDto from(Plan plan) {
@@ -23,6 +25,8 @@ public class PlanResponseDto {
                 .planTitle(plan.getPlanTitle())
                 .date(plan.getDate())
                 .planContent(plan.getPlanContent())
+                .categoryNo(plan.getCategory() != null ? plan.getCategory().getCategoryNo() : null)
+                .categoryName(plan.getCategory() != null ? plan.getCategory().getCategoryName() : "미지정")
                 .build();
     }
 }
