@@ -1,13 +1,13 @@
 package com.kh.Calendar.service;
 
 import com.kh.Calendar.dto.CategoryRequestDto;
-import com.kh.Calendar.entity.Category;
+import com.kh.Calendar.dto.CategoryResponseDto; // import 추가
 
 import java.util.List;
 
 public interface CategoryService {
 
-    List<Category> findAll();
+    List<CategoryResponseDto> findAll();
 
-    Category createCategory(CategoryRequestDto dto);
+    CategoryResponseDto createCategory(CategoryRequestDto dto);
 }
