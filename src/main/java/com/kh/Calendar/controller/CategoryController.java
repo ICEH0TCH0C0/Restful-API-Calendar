@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("/api/categories")
 @RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @GetMapping("/all")
+    @GetMapping()
     public ResponseEntity<List<Category>> getAllCategories() {
         return ResponseEntity.ok(categoryService.findAll());
     }
 
     // [추가] 카테고리 생성 API
-    @PostMapping("/add")
+    @PostMapping()
     public ResponseEntity<Category> addCategory(@RequestBody CategoryRequestDto requestDto) {
         Category savedCategory = categoryService.createCategory(requestDto);
         return ResponseEntity.ok(savedCategory);

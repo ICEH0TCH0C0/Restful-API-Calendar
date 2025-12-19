@@ -12,34 +12,34 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 public class UserController {
 
     private final UserService userService;
 
     // 회원 가입
-    @PostMapping("/signup")
+    @PostMapping("/users")
     public ResponseEntity<UserResponseDto> signUp(@RequestBody UserRequestDto requestDto) {
         UserResponseDto responseDto = userService.signUp(requestDto);
         return ResponseEntity.ok(responseDto);
     }
 
     // 로그인
-    @PostMapping("/login")
+    @PostMapping("/sessions")
     public ResponseEntity<UserResponseDto> signIn(@RequestBody UserRequestDto requestDto) {
         UserResponseDto responseDto = userService.signIn(requestDto);
         return ResponseEntity.ok(responseDto);
     }
 
     // 회원 정보 수정 (RESTful하게 URL에 userNo를 포함)
-    @PatchMapping("/{userNo}")
+    @PatchMapping("/users/{userNo}")
     public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long userNo, @RequestBody UserRequestDto requestDto) {
         UserResponseDto responseDto = userService.updateUser(userNo, requestDto);
         return ResponseEntity.ok(responseDto);
     }
 
     // 아이디 찾기
-    @PostMapping("/findId")
+    @PostMapping("/users/id")
     public ResponseEntity<Map<String, String>> findId(@RequestBody UserRequestDto requestDto) {
         String foundId = userService.findUserId(requestDto);
         Map<String, String> response = new HashMap<>();
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     // 비밀번호 찾기
-    @PostMapping("/findPwd")
+    @PostMapping("/users/pwd")
     public ResponseEntity<Map<String, String>> findPwd(@RequestBody UserRequestDto requestDto) {
         String foundPwd = userService.findUserPwd(requestDto);
         Map<String, String> response = new HashMap<>();
@@ -57,7 +57,7 @@ public class UserController {
     }
 
     // 회원 탈퇴
-    @DeleteMapping("/{userNo}")
+    @DeleteMapping("/users/{userNo}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long userNo) {
         userService.deleteUser(userNo);
         return ResponseEntity.ok().build();

@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/plan")
+@RequestMapping("/api/plans")
 public class PlanController {
 
     private final PlanService planService;
@@ -38,7 +38,7 @@ public class PlanController {
     }
 
     // 일정 검색
-    @GetMapping("/search")
+    @GetMapping()
     public ResponseEntity<List<PlanResponseDto>> searchPlans(@RequestParam Long userNo,
                                                              @RequestParam String date,
                                                              @RequestParam(required = false) String keyword) {
