@@ -20,14 +20,14 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto signUp(UserRequestDto requestDto) {
         User user = requestDto.toEntity();
         User savedUser = userRepository.save(user);
-        return UserResponseDto.from(savedUser);
+        return UserResponseDto.of(savedUser);
     }
 
     @Override
     public UserResponseDto signIn(UserRequestDto requestDto) {
         User user = userRepository.findByUserIdAndUserPwd(requestDto.getUserId(), requestDto.getUserPwd())
                 .orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다."));
-        return UserResponseDto.from(user);
+        return UserResponseDto.of(user);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         user.update(requestDto.getUserName(), requestDto.getUserPhone(), requestDto.getUserEmail());
 
         // 트랜잭션이 커밋될 때 변경 감지(Dirty Checking)에 의해 자동으로 UPDATE 쿼리가 실행됨
-        return UserResponseDto.from(user);
+        return UserResponseDto.of(user);
     }
 
     @Override

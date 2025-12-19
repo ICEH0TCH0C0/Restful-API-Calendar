@@ -22,7 +22,7 @@ public class UserResponseDto {
     private List<PlanResponseDto> plans; // Plan 정보도 DTO로 변환하여 포함
 
     // Entity -> DTO 변환 메소드
-    public static UserResponseDto from(User user) {
+    public static UserResponseDto of(User user) {
         return UserResponseDto.builder()
                 .userNo(user.getUserNo())
                 .userId(user.getUserId())
@@ -30,7 +30,7 @@ public class UserResponseDto {
                 .userPhone(user.getUserPhone())
                 .userEmail(user.getUserEmail())
                 .plans(user.getPlans().stream()
-                        .map(PlanResponseDto::from) // Plan도 DTO로 변환
+                        .map(PlanResponseDto::of) // Plan도 DTO로 변환
                         .collect(Collectors.toList()))
                 .build();
     }

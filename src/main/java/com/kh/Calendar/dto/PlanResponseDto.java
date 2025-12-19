@@ -19,7 +19,7 @@ public class PlanResponseDto {
     private String categoryName;
 
     // Entity -> DTO 변환 메소드
-    public static PlanResponseDto from(Plan plan) {
+    public static PlanResponseDto of(Plan plan) {
         return PlanResponseDto.builder()
                 .planNo(plan.getPlanNo())
                 .planTitle(plan.getPlanTitle())

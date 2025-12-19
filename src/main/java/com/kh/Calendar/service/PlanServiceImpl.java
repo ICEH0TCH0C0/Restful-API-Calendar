@@ -41,7 +41,7 @@ public class PlanServiceImpl implements PlanService {
         }
 
         Plan savedPlan = planRepository.save(plan);
-        return PlanResponseDto.from(savedPlan);
+        return PlanResponseDto.of(savedPlan);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class PlanServiceImpl implements PlanService {
         // 업데이트 메소드에 category 전달
         plan.update(requestDto.getPlanTitle(), requestDto.getPlanContent(), category);
 
-        return PlanResponseDto.from(plan);
+        return PlanResponseDto.of(plan);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class PlanServiceImpl implements PlanService {
     public List<PlanResponseDto> searchPlans(Long userNo, String date, String keyword) {
         List<Plan> plans = planRepository.searchPlans(userNo, date, keyword);
         return plans.stream()
-                .map(PlanResponseDto::from)
+                .map(PlanResponseDto::of)
                 .collect(Collectors.toList());
     }
 }
