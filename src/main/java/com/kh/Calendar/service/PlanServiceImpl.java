@@ -30,10 +30,10 @@ public class PlanServiceImpl implements PlanService {
         User user = userRepository.findByUserNo(userNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
 
-        // 1. Plan 엔티티 생성
+        // Plan 엔티티 생성
         Plan plan = requestDto.toEntity(user);
 
-        // 2. [수정] 카테고리 조회 및 설정
+        // 카테고리 조회 및 설정
         if (requestDto.getCategoryNo() != null) {
             Category category = categoryRepository.findById(requestDto.getCategoryNo())
                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카테고리입니다."));
@@ -50,7 +50,7 @@ public class PlanServiceImpl implements PlanService {
         Plan plan = planRepository.findByPlanNo(planNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 일정을 찾을 수 없습니다."));
 
-        // 3. [수정] 수정 시에도 카테고리 조회
+        // 수정 시에도 카테고리 조회
         Category category = null;
         if (requestDto.getCategoryNo() != null) {
             category = categoryRepository.findById(requestDto.getCategoryNo())
@@ -76,6 +76,7 @@ public class PlanServiceImpl implements PlanService {
         List<Plan> plans = planRepository.searchPlans(userNo, date, keyword);
         return plans.stream()
                 .map(PlanResponseDto::of)
+                // .map((plan) -> PlanResponseDto.of(plan))
                 .collect(Collectors.toList());
     }
 }

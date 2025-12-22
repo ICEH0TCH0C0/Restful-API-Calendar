@@ -55,7 +55,8 @@ RESTful 설계 원칙에 따라 리소스(명사) 중심으로 URI를 구성하�
 
 | 기능 | HTTP Method | URI | 설명 |
 | :--- | :---: | :--- | :--- |
-| **회원가입** | `POST` | `/api/users` | 새로운 사용자를 생성합니다. |
+| **회원가입** | `POST` | `/api/users` | 새로운 사용자를 생성합니다. (아이디 중복 시 409 Conflict 반환) |
+| **아이디 중복 체크** | `GET` | `/api/users/check` | 아이디 중복 여부를 확인합니다. (`?userId=...`) |
 | **로그인** | `POST` | `/api/sessions` | 사용자 인증을 수행하고 세션을 생성합니다. |
 | **정보 수정** | `PATCH` | `/api/users/{userNo}` | 회원 정보를 부분 수정합니다. |
 | **회원 탈퇴** | `DELETE` | `/api/users/{userNo}` | 회원을 삭제합니다. |
@@ -76,7 +77,7 @@ RESTful 설계 원칙에 따라 리소스(명사) 중심으로 URI를 구성하�
 | 기능 | HTTP Method | URI | 설명 |
 | :--- | :---: | :--- | :--- |
 | **목록 조회** | `GET` | `/api/categories` | 전체 카테고리 목록을 조회합니다. |
-| **카테고리 추가** | `POST` | `/api/categories` | 새로운 카테고리를 추가합니다. |
+| **카테고리 추가** | `POST` | `/api/categories` | 새로운 카테고리를 추가합니다. (이름 중복 시 409 Conflict 반환) |
 
 ---
 
