@@ -17,6 +17,9 @@ public interface UserRepository {
     
     // PK로 회원 조회
     Optional<User> findByUserNo(Long userNo);
+
+    // 아이디로 회원 조회 (중복 체크용)
+    Optional<User> findByUserId(String userId);
     
     // 아이디 찾기
     Optional<String> findUserId(String userName, String userPhone);

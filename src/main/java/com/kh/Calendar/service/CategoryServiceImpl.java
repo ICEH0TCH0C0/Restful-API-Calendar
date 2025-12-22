@@ -29,6 +29,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public CategoryResponseDto createCategory(CategoryRequestDto dto) {
+        // 중복 카테고리 이름 체크
+        if (categoryRepository.findByName(dto.getCategoryName()).isPresent()) {
+            throw new IllegalArgumentException("이미 존재하는 카테고리입니다.");
+        }
+
         Category category = categoryRepository.save(dto.toEntity());
         // 저장된 엔티티를 DTO로 변환해서 반환
         return CategoryResponseDto.of(category);

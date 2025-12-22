@@ -18,6 +18,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional // 쓰기 작업이므로 readOnly=false 적용
     public UserResponseDto signUp(UserRequestDto requestDto) {
+        // 아이디 중복 체크
+        if (userRepository.findByUserId(requestDto.getUserId()).isPresent()) {
+            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
+        }
+
         User user = requestDto.toEntity();
         User savedUser = userRepository.save(user);
         return UserResponseDto.of(savedUser);
@@ -61,5 +66,11 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUserNo(userNo)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
         userRepository.delete(user);
+    }
+
+    @Override
+    public boolean checkIdDuplicate(String userId) {
+        // 존재하면 true, 없으면 false 반환
+        return userRepository.findByUserId(userId).isPresent();
     }
 }

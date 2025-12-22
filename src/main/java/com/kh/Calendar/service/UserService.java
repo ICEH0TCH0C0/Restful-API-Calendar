@@ -22,4 +22,7 @@ public interface UserService {
 
     // 회원 탈퇴
     void deleteUser(Long userNo);
+
+    // 아이디 중복 체크
+    boolean checkIdDuplicate(String userId);
 }

@@ -37,6 +37,13 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<User> findByUserId(String userId) {
+        return em.createQuery("select u from User u where u.userId = :userId", User.class)
+                .setParameter("userId", userId)
+                .getResultStream().findFirst();
+    }
+
+    @Override
     public Optional<String> findUserId(String userName, String userPhone) {
         return em.createQuery("select u.userId from User u where u.userName = :userName and u.userPhone = :userPhone", String.class)
                 .setParameter("userName", userName)

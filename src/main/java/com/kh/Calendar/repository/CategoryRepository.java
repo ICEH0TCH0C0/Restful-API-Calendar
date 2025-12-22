@@ -11,6 +11,9 @@ public interface CategoryRepository {
     // ID로 카테고리 하나 조회
     Optional<Category> findById(Long categoryNo);
 
+    // 이름으로 카테고리 조회
+    Optional<Category> findByName(String categoryName);
+
     // 저장
     Category save(Category category);
 }

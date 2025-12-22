@@ -28,6 +28,14 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
+    public Optional<Category> findByName(String categoryName) {
+        List<Category> result = em.createQuery("select c from Category c where c.categoryName = :categoryName", Category.class)
+                .setParameter("categoryName", categoryName)
+                .getResultList();
+        return result.stream().findFirst();
+    }
+
+    @Override
     public Category save(Category category) {
         em.persist(category);
         return category;
