@@ -22,7 +22,7 @@ public class User {
     @Column(name = "USER_ID", unique = true, nullable = false, length = 30)
     private String userId;
 
-    @Column(name = "USER_PWD", nullable = false, length = 30)
+    @Column(name = "USER_PWD", nullable = false, length = 100)
     private String userPwd;
 
     @Column(name = "USER_NAME", nullable = false, length = 30)
@@ -43,5 +43,10 @@ public class User {
         this.userName = userName;
         this.userPhone = userPhone;
         this.userEmail = userEmail;
+    }
+
+    // 비밀번호 변경을 위한 메소드
+    public void updatePassword(String encryptedPwd) {
+        this.userPwd = encryptedPwd;
     }
 }

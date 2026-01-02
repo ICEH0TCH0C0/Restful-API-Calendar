@@ -37,3 +37,7 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+
+jwt:
+  secret: oEc1zxXSd1U/Wccs9DtcC5xTLD+Kuj56zAbNseiH5agmnicKTBKgi8d+djURmIZ6CfkF0aibA+CZyo2+EcSzUg==
+  expiration: 86400000 # 1 day in milliseconds

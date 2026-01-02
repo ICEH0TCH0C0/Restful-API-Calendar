@@ -1,5 +1,6 @@
 package com.kh.Calendar.service;
 
+import com.kh.Calendar.dto.TokenDto;
 import com.kh.Calendar.dto.UserRequestDto;
 import com.kh.Calendar.dto.UserResponseDto;
 
@@ -9,7 +10,7 @@ public interface UserService {
     UserResponseDto signUp(UserRequestDto requestDto);
 
     // 로그인
-    UserResponseDto signIn(UserRequestDto requestDto);
+    TokenDto signIn(UserRequestDto requestDto);
 
     // 회원 정보 수정
     UserResponseDto updateUser(Long userNo, UserRequestDto requestDto);
@@ -17,8 +18,8 @@ public interface UserService {
     // 아이디 찾기
     String findUserId(UserRequestDto requestDto);
 
-    // 비밀번호 찾기
-    String findUserPwd(UserRequestDto requestDto);
+    // 비밀번호 재설정
+    void resetUserPwd(UserRequestDto requestDto);
 
     // 회원 탈퇴
     void deleteUser(Long userNo);
